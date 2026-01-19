@@ -5,10 +5,16 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
 } from "react-router";
+
+import AuthProvider from "./contexts/authProvider";
 
 import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
+import DesktopNav from "./components/DesktopNav";
+import MobileNav from "./components/MobileNav";
+import "./styles/custom.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -33,8 +39,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        {children}
+      <body className="font-mono">
+        <AuthProvider>{children}</AuthProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -43,7 +49,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const navigation = useNavigation();
+  const isNavigating = Boolean(navigation.location);
+  return (
+    <main className="min-h-screen">
+      {isNavigating ? (
+        <div className="flex justify-center items-center h-screen">
+          <div className="loading-spinner"></div>
+        </div>
+      ) : (
+        <Outlet />
+      )}
+    </main>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
