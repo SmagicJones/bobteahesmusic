@@ -14,7 +14,6 @@ import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
 import DesktopNav from "./components/DesktopNav";
 import MobileNav from "./components/MobileNav";
-import "./styles/custom.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
