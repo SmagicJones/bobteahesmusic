@@ -69,7 +69,7 @@ export default function MobileNav() {
                               </NavLink>
                             </li>
                             {kitchens.map((kitchen) => (
-                              <li>
+                              <li key={kitchen.id}>
                                 <NavLink
                                   to={`/kitchens/${kitchen.slug}`}
                                   target="_blank"
@@ -105,7 +105,7 @@ export default function MobileNav() {
                               </NavLink>
                             </li>
                             {bathrooms.map((bathroom) => (
-                              <li>
+                              <li key={bathroom.id}>
                                 <NavLink
                                   to={`/bathrooms/${bathroom.slug}`}
                                   target="_blank"
@@ -136,7 +136,6 @@ export default function MobileNav() {
                   <Login />
                 )}
               </div>
-
               <div className="p-4">
                 <DarkModeToggle />
               </div>

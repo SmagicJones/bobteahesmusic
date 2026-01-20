@@ -23,7 +23,7 @@ export default function DesktopNav() {
   const isAuthenticated = Boolean(user);
 
   return (
-    <div className="desk w-[100vw] flex justify-between items-center p-4">
+    <div className="desk w-[100vw] flex justify-between items-center">
       <NavLink to="/" className="flex justify-center items-center p-4">
         <p className="text-md font-bold hover:text-purple-600">
           JNC Improvements
@@ -51,7 +51,7 @@ export default function DesktopNav() {
                   </NavLink>
                 </li>
                 {kitchens.map((kitchen) => (
-                  <li>
+                  <li key={kitchen.id}>
                     <NavLink
                       to={`/kitchens/${kitchen.slug}`}
                       className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
@@ -94,7 +94,7 @@ export default function DesktopNav() {
                   </NavLink>
                 </li>
                 {bathrooms.map((bathroom) => (
-                  <li>
+                  <li key={bathroom.id}>
                     <NavLink
                       to={`/bathrooms/${bathroom.slug}`}
                       className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
@@ -111,14 +111,6 @@ export default function DesktopNav() {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-
-          {/* <NavigationMenuItem>
-            <NavigationMenuTrigger>
-              <NavLink to="/dashboard">Your JNC</NavLink>
-            </NavigationMenuTrigger>
-
-            <NavigationMenuContent></NavigationMenuContent>
-          </NavigationMenuItem> */}
           <NavigationMenuItem>
             <NavigationMenuTrigger>
               <NavLink to="/contact">Contact</NavLink>
@@ -129,7 +121,6 @@ export default function DesktopNav() {
         </NavigationMenuList>
       </NavigationMenu>
       <NavLink to="/login" className="flex justify-center items-center p-4">
-        {/* <p className="text-md font-bold hover:text-purple-600">Bob Holland</p> */}
         <Button>{isAuthenticated ? "Dashboard" : "Sign In"}</Button>
       </NavLink>
     </div>

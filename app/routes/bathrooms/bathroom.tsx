@@ -33,31 +33,6 @@ export default function Bathroom() {
             </CardFooter>
           </Card>
         </div>
-        {/* <div className="grid grid-cols-1 m-2 gap-4">
-          <div className="bg-slate-400 rounded p-4">
-            <h2>{bathroom.subtitle}</h2>
-            <p>{bathroom.short_content}</p>
-          </div>
-          <div className="bg-slate-400 rounded p-4">
-            <p>{bathroom.long_content}</p>
-          </div>
-          <div className="bg-slate-400 rounded p-4">
-            <h3 className="text-xl mb-2">Features</h3>
-            <ul className="list-disc list-inside">
-              {bathroom.features.map((feature, index) => (
-                <li key={index}>{feature}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="bg-slate-400 rounded p-4">
-            <p>
-              <strong>Completed:</strong> {bathroom.completionDate}
-            </p>
-            <p>
-              <strong>Location:</strong> {bathroom.location}
-            </p>
-          </div>
-        </div> */}
       </section>
     </main>
   );

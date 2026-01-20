@@ -62,7 +62,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
 
   // Project messages state
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>(
-    null
+    null,
   );
   const [projectMessages, setProjectMessages] = useState<{
     [key: string]: Message[];
@@ -155,7 +155,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
       user.uid,
       "projects",
       expandedProjectId,
-      "messages"
+      "messages",
     );
     const q = query(messagesRef, orderBy("createdAt", "desc"));
 
@@ -206,7 +206,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
   // Handle project message submission
   const handleProjectMessageSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    projectId: string
+    projectId: string,
   ) => {
     e.preventDefault();
     const msgText = projectMessageText[projectId]?.trim();
@@ -224,7 +224,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
           sender: "customer",
           createdAt: serverTimestamp(),
           read: false,
-        }
+        },
       );
 
       setProjectMessageText({ ...projectMessageText, [projectId]: "" });
@@ -267,7 +267,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
   const handleDeleteProject = async (projectId: string) => {
     if (
       !confirm(
-        "Are you sure you want to delete this project? This will also delete all messages associated with it."
+        "Are you sure you want to delete this project? This will also delete all messages associated with it.",
       )
     )
       return;
@@ -343,7 +343,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
 
   const handleUpdateProjectMessage = async (
     messageId: string,
-    projectId: string
+    projectId: string,
   ) => {
     if (!editProjectMessageText.trim()) return;
 
@@ -355,7 +355,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
         "projects",
         projectId,
         "messages",
-        messageId
+        messageId,
       );
       await updateDoc(messageRef, {
         text: editProjectMessageText,
@@ -371,7 +371,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
 
   const handleDeleteProjectMessage = async (
     messageId: string,
-    projectId: string
+    projectId: string,
   ) => {
     if (!confirm("Are you sure you want to delete this message?")) return;
 
@@ -383,7 +383,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
         "projects",
         projectId,
         "messages",
-        messageId
+        messageId,
       );
       await deleteDoc(messageRef);
     } catch (error) {
@@ -420,7 +420,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
               <strong>Member Since:</strong>{" "}
               {userData?.createdAt
                 ? new Date(
-                    userData.createdAt.seconds * 1000
+                    userData.createdAt.seconds * 1000,
                   ).toLocaleDateString()
                 : "N/A"}
             </div>
@@ -526,7 +526,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                         Created:{" "}
                         {project.createdAt
                           ? new Date(
-                              project.createdAt.seconds * 1000
+                              project.createdAt.seconds * 1000,
                             ).toLocaleDateString()
                           : "Just now"}
                       </p>
@@ -616,7 +616,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                                 <span className="text-xs text-gray-500">
                                   {msg.createdAt
                                     ? new Date(
-                                        msg.createdAt.seconds * 1000
+                                        msg.createdAt.seconds * 1000,
                                       ).toLocaleString()
                                     : "Just now"}
                                 </span>
@@ -639,7 +639,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                                       onClick={() =>
                                         handleUpdateProjectMessage(
                                           msg.id,
-                                          project.id
+                                          project.id,
                                         )
                                       }
                                       className="bg-green-500 text-white text-sm py-1 px-3 rounded hover:bg-green-600"
@@ -663,7 +663,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                                         onClick={() =>
                                           handleEditProjectMessage(
                                             msg,
-                                            project.id
+                                            project.id,
                                           )
                                         }
                                         className="bg-blue-500 text-white text-xs py-1 px-2 rounded hover:bg-blue-600"
@@ -674,7 +674,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                                         onClick={() =>
                                           handleDeleteProjectMessage(
                                             msg.id,
-                                            project.id
+                                            project.id,
                                           )
                                         }
                                         className="bg-red-500 text-white text-xs py-1 px-2 rounded hover:bg-red-600"
@@ -760,7 +760,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                     <span className="text-xs text-gray-500">
                       {msg.createdAt
                         ? new Date(
-                            msg.createdAt.seconds * 1000
+                            msg.createdAt.seconds * 1000,
                           ).toLocaleString()
                         : "Just now"}
                     </span>
@@ -821,1031 +821,3 @@ export default function UserDashboard({ user }: UserDashboardProps) {
     </div>
   );
 }
-
-// // app/components/user/user.tsx
-// import { useEffect, useState } from "react";
-// import {
-//   doc,
-//   getDoc,
-//   collection,
-//   addDoc,
-//   updateDoc,
-//   deleteDoc,
-//   serverTimestamp,
-//   Timestamp,
-//   query,
-//   orderBy,
-//   onSnapshot,
-//   getDocs,
-// } from "firebase/firestore";
-// import { db } from "~/firebase/firebaseConfig";
-// import type { AuthUser } from "~/types/authUser";
-
-// interface UserData {
-//   email: string;
-//   displayName: string | null;
-//   createdAt: Timestamp;
-//   role?: string;
-// }
-
-// interface Message {
-//   id: string;
-//   text: string;
-//   sender: "customer" | "designer";
-//   createdAt: Timestamp;
-//   read: boolean;
-// }
-
-// interface Project {
-//   id: string;
-//   title: string;
-//   description: string;
-//   createdAt: Timestamp;
-// }
-
-// interface UserDashboardProps {
-//   user: AuthUser;
-// }
-
-// export default function UserDashboard({ user }: UserDashboardProps) {
-//   const [userData, setUserData] = useState<UserData | null>(null);
-//   const [loading, setLoading] = useState(true);
-//   const [messages, setMessages] = useState<Message[]>([]);
-//   const [messagesLoading, setMessagesLoading] = useState(true);
-//   const [message, setMessage] = useState("");
-//   const [submitting, setSubmitting] = useState(false);
-//   const [editingId, setEditingId] = useState<string | null>(null);
-//   const [editText, setEditText] = useState("");
-
-//   // Project state
-//   const [projects, setProjects] = useState<Project[]>([]);
-//   const [projectsLoading, setProjectsLoading] = useState(true);
-//   const [showProjectForm, setShowProjectForm] = useState(false);
-//   const [projectTitle, setProjectTitle] = useState("");
-//   const [projectDescription, setProjectDescription] = useState("");
-//   const [creatingProject, setCreatingProject] = useState(false);
-
-//   // Fetch user document from Firestore
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       try {
-//         const userDoc = await getDoc(doc(db, "users", user.uid));
-//         if (userDoc.exists()) {
-//           setUserData(userDoc.data() as UserData);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching user data:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchUserData();
-//   }, [user]);
-
-//   // Fetch messages in real-time
-//   useEffect(() => {
-//     const messagesRef = collection(db, "users", user.uid, "messages");
-//     const q = query(messagesRef, orderBy("createdAt", "desc"));
-
-//     const unsubscribe = onSnapshot(q, (snapshot) => {
-//       const messagesData: Message[] = [];
-//       snapshot.forEach((doc) => {
-//         messagesData.push({
-//           id: doc.id,
-//           ...doc.data(),
-//         } as Message);
-//       });
-//       setMessages(messagesData);
-//       setMessagesLoading(false);
-//     });
-
-//     return () => unsubscribe();
-//   }, [user]);
-
-//   // Fetch projects in real-time
-//   useEffect(() => {
-//     const projectsRef = collection(db, "users", user.uid, "projects");
-//     const q = query(projectsRef, orderBy("createdAt", "desc"));
-
-//     const unsubscribe = onSnapshot(q, (snapshot) => {
-//       const projectsData: Project[] = [];
-//       snapshot.forEach((doc) => {
-//         projectsData.push({
-//           id: doc.id,
-//           ...doc.data(),
-//         } as Project);
-//       });
-//       setProjects(projectsData);
-//       setProjectsLoading(false);
-//     });
-
-//     return () => unsubscribe();
-//   }, [user]);
-
-//   // Handle message submission
-//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     if (!message.trim()) return;
-
-//     setSubmitting(true);
-//     try {
-//       await addDoc(collection(db, "users", user.uid, "messages"), {
-//         text: message,
-//         sender: "customer",
-//         createdAt: serverTimestamp(),
-//         read: false,
-//       });
-
-//       setMessage("");
-//     } catch (error) {
-//       console.error("Error sending message:", error);
-//       alert("Failed to send message");
-//     } finally {
-//       setSubmitting(false);
-//     }
-//   };
-
-//   // Handle project creation
-//   const handleCreateProject = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     if (!projectTitle.trim() || !projectDescription.trim()) return;
-
-//     setCreatingProject(true);
-//     try {
-//       await addDoc(collection(db, "users", user.uid, "projects"), {
-//         title: projectTitle,
-//         description: projectDescription,
-//         createdAt: serverTimestamp(),
-//       });
-
-//       setProjectTitle("");
-//       setProjectDescription("");
-//       setShowProjectForm(false);
-//     } catch (error) {
-//       console.error("Error creating project:", error);
-//       alert("Failed to create project");
-//     } finally {
-//       setCreatingProject(false);
-//     }
-//   };
-
-//   // Handle delete project
-//   const handleDeleteProject = async (projectId: string) => {
-//     if (
-//       !confirm(
-//         "Are you sure you want to delete this project? This will also delete all messages associated with it."
-//       )
-//     )
-//       return;
-
-//     try {
-//       const projectRef = doc(db, "users", user.uid, "projects", projectId);
-//       await deleteDoc(projectRef);
-//     } catch (error) {
-//       console.error("Error deleting project:", error);
-//       alert("Failed to delete project");
-//     }
-//   };
-
-//   const handleEdit = (msg: Message) => {
-//     setEditingId(msg.id);
-//     setEditText(msg.text);
-//   };
-
-//   const handleUpdate = async (messageId: string) => {
-//     if (!editText.trim()) return;
-
-//     try {
-//       const messageRef = doc(db, "users", user.uid, "messages", messageId);
-//       await updateDoc(messageRef, {
-//         text: editText,
-//       });
-//       setEditingId(null);
-//       setEditText("");
-//     } catch (error) {
-//       console.error("error updating message:", error);
-//       alert("failed to update message");
-//     }
-//   };
-
-//   const handleDelete = async (messageId: string) => {
-//     if (!confirm("Are you sure you want to delete this message?")) return;
-
-//     try {
-//       const messageRef = doc(db, "users", user.uid, "messages", messageId);
-//       await deleteDoc(messageRef);
-//     } catch (error) {
-//       console.error("Error deleting message:", error);
-//       alert("failed to delete message");
-//     }
-//   };
-
-//   const handleCancelEdit = () => {
-//     setEditingId(null);
-//     setEditText("");
-//   };
-
-//   if (loading) {
-//     return <div className="p-6">Loading...</div>;
-//   }
-
-//   return (
-//     <div className="bg-white min-h-screen p-6">
-//       <div className="max-w-4xl mx-auto">
-//         {/* User Info Section */}
-//         <div className="bg-slate-100 p-6 rounded-lg mb-6">
-//           <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-//           <div className="space-y-2">
-//             <div>
-//               <strong>Email:</strong> {userData?.email || user.email}
-//             </div>
-//             <div>
-//               <strong>Display Name:</strong>{" "}
-//               {userData?.displayName || "Not set"}
-//             </div>
-//             <div>
-//               <strong>Member Since:</strong>{" "}
-//               {userData?.createdAt
-//                 ? new Date(
-//                     userData.createdAt.seconds * 1000
-//                   ).toLocaleDateString()
-//                 : "N/A"}
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Welcome Section */}
-//         <section className="mb-6">
-//           <div className="bg-slate-300 text-black p-4 rounded">
-//             <h2 className="text-xl">
-//               Welcome {user.displayName || user.email}!
-//             </h2>
-//           </div>
-//         </section>
-
-//         {/* Projects Section */}
-//         <section className="bg-white border border-gray-300 p-6 rounded-lg mb-6">
-//           <div className="flex justify-between items-center mb-4">
-//             <h3 className="text-xl font-semibold">Your Projects</h3>
-//             <button
-//               onClick={() => setShowProjectForm(!showProjectForm)}
-//               className="bg-purple-500 text-white font-semibold py-2 px-4 rounded hover:bg-purple-600"
-//             >
-//               {showProjectForm ? "Cancel" : "+ New Project"}
-//             </button>
-//           </div>
-
-//           {/* Project Creation Form */}
-//           {showProjectForm && (
-//             <form
-//               onSubmit={handleCreateProject}
-//               className="mb-6 p-4 bg-purple-50 rounded-lg"
-//             >
-//               <div className="mb-4">
-//                 <label
-//                   htmlFor="projectTitle"
-//                   className="block text-gray-700 font-medium mb-2"
-//                 >
-//                   Project Title
-//                 </label>
-//                 <input
-//                   type="text"
-//                   id="projectTitle"
-//                   value={projectTitle}
-//                   onChange={(e) => setProjectTitle(e.target.value)}
-//                   className="w-full border border-gray-300 rounded p-3 text-gray-700 bg-white"
-//                   placeholder="e.g., Website Redesign"
-//                   required
-//                 />
-//               </div>
-//               <div className="mb-4">
-//                 <label
-//                   htmlFor="projectDescription"
-//                   className="block text-gray-700 font-medium mb-2"
-//                 >
-//                   Project Description
-//                 </label>
-//                 <textarea
-//                   id="projectDescription"
-//                   value={projectDescription}
-//                   onChange={(e) => setProjectDescription(e.target.value)}
-//                   className="w-full border border-gray-300 rounded p-3 text-gray-700 bg-white"
-//                   rows={4}
-//                   placeholder="Describe your project..."
-//                   required
-//                 />
-//               </div>
-//               <button
-//                 type="submit"
-//                 disabled={creatingProject}
-//                 className="bg-purple-500 text-white font-semibold py-2 px-6 rounded hover:bg-purple-600 disabled:bg-gray-400"
-//               >
-//                 {creatingProject ? "Creating..." : "Create Project"}
-//               </button>
-//             </form>
-//           )}
-
-//           {/* Projects List */}
-//           {projectsLoading ? (
-//             <div className="text-center py-8 text-gray-500">
-//               Loading projects...
-//             </div>
-//           ) : projects.length === 0 ? (
-//             <div className="text-center py-8 text-gray-500">
-//               No projects yet. Create your first project!
-//             </div>
-//           ) : (
-//             <div className="space-y-4">
-//               {projects.map((project) => (
-//                 <div
-//                   key={project.id}
-//                   className="border border-gray-300 rounded-lg p-4 bg-purple-50"
-//                 >
-//                   <div className="flex justify-between items-start mb-2">
-//                     <div>
-//                       <h4 className="text-lg font-semibold text-gray-800">
-//                         {project.title}
-//                       </h4>
-//                       <p className="text-sm text-gray-600 mt-1">
-//                         {project.description}
-//                       </p>
-//                       <p className="text-xs text-gray-400 mt-2">
-//                         Created:{" "}
-//                         {project.createdAt
-//                           ? new Date(
-//                               project.createdAt.seconds * 1000
-//                             ).toLocaleDateString()
-//                           : "Just now"}
-//                       </p>
-//                     </div>
-//                     <button
-//                       onClick={() => handleDeleteProject(project.id)}
-//                       className="bg-red-500 text-white text-sm py-1 px-3 rounded hover:bg-red-600"
-//                     >
-//                       Delete
-//                     </button>
-//                   </div>
-//                   <button className="mt-3 bg-purple-500 text-white text-sm py-2 px-4 rounded hover:bg-purple-600">
-//                     View Messages
-//                   </button>
-//                 </div>
-//               ))}
-//             </div>
-//           )}
-//         </section>
-
-//         {/* General Message Form */}
-//         <section className="bg-white border border-gray-300 p-6 rounded-lg mb-6">
-//           <h3 className="text-xl font-semibold mb-4">
-//             Send a General Message to Support
-//           </h3>
-//           <form onSubmit={handleSubmit}>
-//             <div className="mb-4">
-//               <label
-//                 htmlFor="message"
-//                 className="block text-gray-700 font-medium mb-2"
-//               >
-//                 Your Message
-//               </label>
-//               <textarea
-//                 id="message"
-//                 value={message}
-//                 onChange={(e) => setMessage(e.target.value)}
-//                 className="w-full border border-gray-300 rounded p-3 text-gray-700 bg-white"
-//                 rows={5}
-//                 placeholder="Type your message here..."
-//                 required
-//               />
-//             </div>
-//             <button
-//               type="submit"
-//               disabled={submitting}
-//               className="bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 disabled:bg-gray-400"
-//             >
-//               {submitting ? "Sending..." : "Send Message"}
-//             </button>
-//           </form>
-//         </section>
-
-//         {/* General Messages Section */}
-//         <section className="bg-white border border-gray-300 p-6 rounded-lg">
-//           <h3 className="text-xl font-semibold mb-4">General Messages</h3>
-
-//           {messagesLoading ? (
-//             <div className="text-center py-8 text-gray-500">
-//               Loading messages...
-//             </div>
-//           ) : messages.length === 0 ? (
-//             <div className="text-center py-8 text-gray-500">
-//               No messages yet. Send your first message above!
-//             </div>
-//           ) : (
-//             <div className="grid gap-4">
-//               {messages.map((msg) => (
-//                 <div
-//                   key={msg.id}
-//                   className={`p-4 rounded-lg ${
-//                     msg.sender === "customer"
-//                       ? "bg-blue-50 border-l-4 border-blue-500"
-//                       : "bg-green-50 border-l-4 border-green-500"
-//                   }`}
-//                 >
-//                   <div className="flex justify-between items-start mb-2">
-//                     <span className="font-semibold text-sm">
-//                       {msg.sender === "customer" ? "You" : "Support"}
-//                     </span>
-//                     <span className="text-xs text-gray-500">
-//                       {msg.createdAt
-//                         ? new Date(
-//                             msg.createdAt.seconds * 1000
-//                           ).toLocaleString()
-//                         : "Just now"}
-//                     </span>
-//                   </div>
-
-//                   {/* editing */}
-//                   {editingId === msg.id ? (
-//                     <div className="mt-2">
-//                       <textarea
-//                         value={editText}
-//                         onChange={(e) => setEditText(e.target.value)}
-//                         className="w-full border border-gray-500 rounded p-2 text-grey-700 bg-white mb-2"
-//                         rows={3}
-//                       ></textarea>
-//                       <div className="flex gap-2">
-//                         <button
-//                           onClick={() => handleUpdate(msg.id)}
-//                           className="bg-green-500 text-white text-sm py-1 px-3 rounded hover:bg-green-600"
-//                         >
-//                           Save
-//                         </button>
-//                         <button
-//                           onClick={handleCancelEdit}
-//                           className="bg-gray-500 text-white text-sm py-1 px-3 rounded hover:bg-gray-600"
-//                         >
-//                           Cancel
-//                         </button>
-//                       </div>
-//                     </div>
-//                   ) : (
-//                     <>
-//                       <p className="text-gray-800">{msg.text}</p>
-//                       {/* only edit own messages */}
-//                       {msg.sender === "customer" && (
-//                         <div className="flex gap-2 mt-3">
-//                           <button
-//                             onClick={() => handleEdit(msg)}
-//                             className="bg-blue-500 text-white text-sm py-1 px-3 rounded hover:bg-blue-600"
-//                           >
-//                             Edit
-//                           </button>
-//                           <button
-//                             onClick={() => handleDelete(msg.id)}
-//                             className="bg-red-500 text-white text-sm py-1 px-3 rounded hover:bg-red-600"
-//                           >
-//                             Delete
-//                           </button>
-//                         </div>
-//                       )}
-//                     </>
-//                   )}
-//                 </div>
-//               ))}
-//             </div>
-//           )}
-//         </section>
-//       </div>
-//     </div>
-//   );
-// }
-
-// // app/components/user/user.tsx
-// import { useEffect, useState } from "react";
-// import {
-//   doc,
-//   getDoc,
-//   collection,
-//   addDoc,
-//   updateDoc,
-//   deleteDoc,
-//   serverTimestamp,
-//   Timestamp,
-//   query,
-//   orderBy,
-//   onSnapshot,
-// } from "firebase/firestore";
-// import { db } from "~/firebase/firebaseConfig";
-// import type { AuthUser } from "~/types/authUser";
-
-// interface UserData {
-//   email: string;
-//   displayName: string | null;
-//   createdAt: Timestamp;
-//   role?: string;
-// }
-
-// interface Message {
-//   id: string;
-//   text: string;
-//   sender: "customer" | "designer";
-//   createdAt: Timestamp;
-//   read: boolean;
-// }
-
-// interface UserDashboardProps {
-//   user: AuthUser; // Changed type
-// }
-
-// export default function UserDashboard({ user }: UserDashboardProps) {
-//   const [userData, setUserData] = useState<UserData | null>(null);
-//   const [loading, setLoading] = useState(true);
-//   const [messages, setMessages] = useState<Message[]>([]);
-//   const [messagesLoading, setMessagesLoading] = useState(true);
-//   const [message, setMessage] = useState("");
-//   const [submitting, setSubmitting] = useState(false);
-//   const [editingId, setEditingId] = useState<string | null>(null);
-//   const [editText, setEditText] = useState("");
-
-//   // Fetch user document from Firestore
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       try {
-//         const userDoc = await getDoc(doc(db, "users", user.uid));
-//         if (userDoc.exists()) {
-//           setUserData(userDoc.data() as UserData);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching user data:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchUserData();
-//   }, [user]);
-
-//   // Fetch messages in real-time
-//   useEffect(() => {
-//     const messagesRef = collection(db, "users", user.uid, "messages");
-//     const q = query(messagesRef, orderBy("createdAt", "desc"));
-
-//     const unsubscribe = onSnapshot(q, (snapshot) => {
-//       const messagesData: Message[] = [];
-//       snapshot.forEach((doc) => {
-//         messagesData.push({
-//           id: doc.id,
-//           ...doc.data(),
-//         } as Message);
-//       });
-//       setMessages(messagesData);
-//       setMessagesLoading(false);
-//     });
-
-//     return () => unsubscribe();
-//   }, [user]);
-
-//   // Handle message submission
-//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     if (!message.trim()) return;
-
-//     setSubmitting(true);
-//     try {
-//       await addDoc(collection(db, "users", user.uid, "messages"), {
-//         text: message,
-//         sender: "customer",
-//         createdAt: serverTimestamp(),
-//         read: false,
-//       });
-
-//       setMessage("");
-//     } catch (error) {
-//       console.error("Error sending message:", error);
-//       alert("Failed to send message");
-//     } finally {
-//       setSubmitting(false);
-//     }
-//   };
-
-//   const handleEdit = (msg: Message) => {
-//     setEditingId(msg.id);
-//     setEditText(msg.text);
-//   };
-
-//   const handleUpdate = async (messageId: string) => {
-//     if (!editText.trim()) return;
-
-//     try {
-//       const messageRef = doc(db, "users", user.uid, "messages", messageId);
-//       await updateDoc(messageRef, {
-//         text: editText,
-//       });
-//       setEditingId(null);
-//       setEditText("");
-//     } catch (error) {
-//       console.error("error updating message:", error);
-//       alert("failed to update message");
-//     }
-//   };
-
-//   const handleDelete = async (messageId: string) => {
-//     if (!confirm("Are you sure you want to delete this message?")) return;
-
-//     try {
-//       const messageRef = doc(db, "users", user.uid, "messages", messageId);
-//       await deleteDoc(messageRef);
-//     } catch (error) {
-//       console.error("Error deleting message:", error);
-//       alert("failed to delete message");
-//     }
-//   };
-
-//   const handleCancelEdit = () => {
-//     setEditingId(null);
-//     setEditText("");
-//   };
-
-//   if (loading) {
-//     return <div className="p-6">Loading...</div>;
-//   }
-
-//   return (
-//     <div className="bg-white min-h-screen p-6">
-//       <div className="max-w-4xl mx-auto">
-//         {/* User Info Section */}
-//         <div className="bg-slate-100 p-6 rounded-lg mb-6">
-//           <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-//           <div className="space-y-2">
-//             <div>
-//               <strong>Email:</strong> {userData?.email || user.email}
-//             </div>
-//             <div>
-//               <strong>Display Name:</strong>{" "}
-//               {userData?.displayName || "Not set"}
-//             </div>
-//             <div>
-//               <strong>Member Since:</strong>{" "}
-//               {userData?.createdAt
-//                 ? new Date(
-//                     userData.createdAt.seconds * 1000
-//                   ).toLocaleDateString()
-//                 : "N/A"}
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Welcome Section */}
-//         <section className="mb-6">
-//           <div className="bg-slate-300 text-black p-4 rounded">
-//             <h2 className="text-xl">
-//               Welcome {user.displayName || user.email}!
-//             </h2>
-//           </div>
-//         </section>
-
-//         {/* Message Form */}
-//         <section className="bg-white border border-gray-300 p-6 rounded-lg mb-6">
-//           <h3 className="text-xl font-semibold mb-4">
-//             Send a Message to Support
-//           </h3>
-//           <form onSubmit={handleSubmit}>
-//             <div className="mb-4">
-//               <label
-//                 htmlFor="message"
-//                 className="block text-gray-700 font-medium mb-2"
-//               >
-//                 Your Message
-//               </label>
-//               <textarea
-//                 id="message"
-//                 value={message}
-//                 onChange={(e) => setMessage(e.target.value)}
-//                 className="w-full border border-gray-300 rounded p-3 text-gray-700 bg-white"
-//                 rows={5}
-//                 placeholder="Type your message here..."
-//                 required
-//               />
-//             </div>
-//             <button
-//               type="submit"
-//               disabled={submitting}
-//               className="bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 disabled:bg-gray-400"
-//             >
-//               {submitting ? "Sending..." : "Send Message"}
-//             </button>
-//           </form>
-//         </section>
-
-//         {/* Messages Section */}
-//         <section className="bg-white border border-gray-300 p-6 rounded-lg">
-//           <h3 className="text-xl font-semibold mb-4">Your Messages</h3>
-
-//           {messagesLoading ? (
-//             <div className="text-center py-8 text-gray-500">
-//               Loading messages...
-//             </div>
-//           ) : messages.length === 0 ? (
-//             <div className="text-center py-8 text-gray-500">
-//               No messages yet. Send your first message above!
-//             </div>
-//           ) : (
-//             <div className="grid gap-4">
-//               {messages.map((msg) => (
-//                 <div
-//                   key={msg.id}
-//                   className={`p-4 rounded-lg ${
-//                     msg.sender === "customer"
-//                       ? "bg-blue-50 border-l-4 border-blue-500"
-//                       : "bg-green-50 border-l-4 border-green-500"
-//                   }`}
-//                 >
-//                   <div className="flex justify-between items-start mb-2">
-//                     <span className="font-semibold text-sm">
-//                       {msg.sender === "customer" ? "You" : "Support"}
-//                     </span>
-//                     <span className="text-xs text-gray-500">
-//                       {msg.createdAt
-//                         ? new Date(
-//                             msg.createdAt.seconds * 1000
-//                           ).toLocaleString()
-//                         : "Just now"}
-//                     </span>
-//                   </div>
-
-//                   {/* editing */}
-//                   {editingId === msg.id ? (
-//                     <div className="mt-2">
-//                       <textarea
-//                         value={editText}
-//                         onChange={(e) => setEditText(e.target.value)}
-//                         className="w-full border border-gray-500 rounded p-2 text-grey-700 bg-white mb-2"
-//                         rows={3}
-//                       ></textarea>
-//                       <div className="flex gap-2">
-//                         <button
-//                           onClick={() => handleUpdate(msg.id)}
-//                           className="bg-green-500 text-white text-sm py-1 px-3 rounded hover:bg-green-600"
-//                         >
-//                           Save
-//                         </button>
-//                         <button
-//                           onClick={handleCancelEdit}
-//                           className="bg-gray-500 text-white text-sm py-1 px-3 rounded hover:bg-gray-600"
-//                         >
-//                           Cancel
-//                         </button>
-//                       </div>
-//                     </div>
-//                   ) : (
-//                     <>
-//                       <p className="text-gray-800">{msg.text}</p>
-//                       {/* only edit own messages */}
-//                       {msg.sender === "customer" && (
-//                         <div className="flex gap-2 mt-3">
-//                           <button
-//                             onClick={() => handleEdit(msg)}
-//                             className="bg-blue-500 text-white text-sm py-1 px-3 rounded hover:bg-blue-600"
-//                           >
-//                             Edit
-//                           </button>
-//                           <button
-//                             onClick={() => handleDelete(msg.id)}
-//                             className="bg-red-500 text-white text-sm py-1 px-3 rounded hover:bg-red-600"
-//                           >
-//                             Delete
-//                           </button>
-//                         </div>
-//                       )}
-//                     </>
-//                   )}
-//                 </div>
-//               ))}
-//             </div>
-//           )}
-//         </section>
-//       </div>
-//     </div>
-//   );
-// }
-
-// // app/components/user/user.tsx
-// import { useEffect, useState } from "react";
-// import {
-//   doc,
-//   getDoc,
-//   collection,
-//   addDoc,
-//   serverTimestamp,
-//   Timestamp,
-//   query,
-//   orderBy,
-//   onSnapshot,
-// } from "firebase/firestore";
-// import { db } from "~/firebase/firebaseConfig";
-// import type { User } from "firebase/auth";
-
-// interface UserData {
-//   email: string;
-//   displayName: string | null;
-//   createdAt: Timestamp;
-//   role?: string;
-// }
-
-// interface Message {
-//   id: string;
-//   text: string;
-//   sender: "customer" | "designer";
-//   createdAt: Timestamp;
-//   read: boolean;
-// }
-
-// interface UserDashboardProps {
-//   user: User;
-// }
-
-// export default function UserDashboard({ user }: UserDashboardProps) {
-//   const [userData, setUserData] = useState<UserData | null>(null);
-//   const [loading, setLoading] = useState(true);
-//   const [messages, setMessages] = useState<Message[]>([]);
-//   const [messagesLoading, setMessagesLoading] = useState(true);
-//   const [message, setMessage] = useState("");
-//   const [submitting, setSubmitting] = useState(false);
-
-//   // Fetch user document from Firestore
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       try {
-//         const userDoc = await getDoc(doc(db, "users", user.uid));
-//         if (userDoc.exists()) {
-//           setUserData(userDoc.data() as UserData);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching user data:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchUserData();
-//   }, [user]);
-
-//   // Fetch messages in real-time
-//   useEffect(() => {
-//     const messagesRef = collection(db, "users", user.uid, "messages");
-//     const q = query(messagesRef, orderBy("createdAt", "desc"));
-
-//     const unsubscribe = onSnapshot(q, (snapshot) => {
-//       const messagesData: Message[] = [];
-//       snapshot.forEach((doc) => {
-//         messagesData.push({
-//           id: doc.id,
-//           ...doc.data(),
-//         } as Message);
-//       });
-//       setMessages(messagesData);
-//       setMessagesLoading(false);
-//     });
-
-//     return () => unsubscribe();
-//   }, [user]);
-
-//   // Handle message submission
-//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     if (!message.trim()) return;
-
-//     setSubmitting(true);
-//     try {
-//       await addDoc(collection(db, "users", user.uid, "messages"), {
-//         text: message,
-//         sender: "customer",
-//         createdAt: serverTimestamp(),
-//         read: false,
-//       });
-
-//       setMessage("");
-//     } catch (error) {
-//       console.error("Error sending message:", error);
-//       alert("Failed to send message");
-//     } finally {
-//       setSubmitting(false);
-//     }
-//   };
-
-//   if (loading) {
-//     return <div className="p-6">Loading...</div>;
-//   }
-
-//   return (
-//     <div className="bg-white min-h-screen p-6">
-//       <div className="max-w-4xl mx-auto">
-//         {/* User Info Section */}
-//         <div className="bg-slate-100 p-6 rounded-lg mb-6">
-//           <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-//           <div className="space-y-2">
-//             <div>
-//               <strong>Email:</strong> {userData?.email || user.email}
-//             </div>
-//             <div>
-//               <strong>Display Name:</strong>{" "}
-//               {userData?.displayName || "Not set"}
-//             </div>
-//             <div>
-//               <strong>Member Since:</strong>{" "}
-//               {userData?.createdAt
-//                 ? new Date(
-//                     userData.createdAt.seconds * 1000
-//                   ).toLocaleDateString()
-//                 : "N/A"}
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Welcome Section */}
-//         <section className="mb-6">
-//           <div className="bg-slate-300 text-black p-4 rounded">
-//             <h2 className="text-xl">
-//               Welcome {user.displayName || user.email}!
-//             </h2>
-//           </div>
-//         </section>
-
-//         {/* Message Form */}
-//         <section className="bg-white border border-gray-300 p-6 rounded-lg mb-6">
-//           <h3 className="text-xl font-semibold mb-4">
-//             Send a Message to Support
-//           </h3>
-//           <form onSubmit={handleSubmit}>
-//             <div className="mb-4">
-//               <label
-//                 htmlFor="message"
-//                 className="block text-gray-700 font-medium mb-2"
-//               >
-//                 Your Message
-//               </label>
-//               <textarea
-//                 id="message"
-//                 value={message}
-//                 onChange={(e) => setMessage(e.target.value)}
-//                 className="w-full border border-gray-300 rounded p-3 text-gray-700 bg-white"
-//                 rows={5}
-//                 placeholder="Type your message here..."
-//                 required
-//               />
-//             </div>
-//             <button
-//               type="submit"
-//               disabled={submitting}
-//               className="bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 disabled:bg-gray-400"
-//             >
-//               {submitting ? "Sending..." : "Send Message"}
-//             </button>
-//           </form>
-//         </section>
-
-//         {/* Messages Section */}
-//         <section className="bg-white border border-gray-300 p-6 rounded-lg">
-//           <h3 className="text-xl font-semibold mb-4">Your Messages</h3>
-
-//           {messagesLoading ? (
-//             <div className="text-center py-8 text-gray-500">
-//               Loading messages...
-//             </div>
-//           ) : messages.length === 0 ? (
-//             <div className="text-center py-8 text-gray-500">
-//               No messages yet. Send your first message above!
-//             </div>
-//           ) : (
-//             <div className="grid gap-4">
-//               {messages.map((msg) => (
-//                 <div
-//                   key={msg.id}
-//                   className={`p-4 rounded-lg ${
-//                     msg.sender === "customer"
-//                       ? "bg-blue-50 border-l-4 border-blue-500"
-//                       : "bg-green-50 border-l-4 border-green-500"
-//                   }`}
-//                 >
-//                   <div className="flex justify-between items-start mb-2">
-//                     <span className="font-semibold text-sm">
-//                       {msg.sender === "customer" ? "You" : "Support"}
-//                     </span>
-//                     <span className="text-xs text-gray-500">
-//                       {msg.createdAt
-//                         ? new Date(
-//                             msg.createdAt.seconds * 1000
-//                           ).toLocaleString()
-//                         : "Just now"}
-//                     </span>
-//                   </div>
-//                   <p className="text-gray-800">{msg.text}</p>
-//                 </div>
-//               ))}
-//             </div>
-//           )}
-//         </section>
-//       </div>
-//     </div>
-//   );
-// }

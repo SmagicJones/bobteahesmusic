@@ -38,6 +38,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const saved = localStorage.getItem("dark-mode");
+                const isDark = saved === "true" || 
+                               (saved === null && window.matchMedia("(prefers-color-scheme: dark)").matches);
+                if (isDark) {
+                  document.documentElement.classList.add("dark");
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body className="font-mono">
         <AuthProvider>{children}</AuthProvider>
