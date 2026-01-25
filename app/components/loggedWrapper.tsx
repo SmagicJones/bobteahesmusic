@@ -16,7 +16,7 @@ export default function LoggedWrapper() {
   return (
     <div>
       <Outlet />
-      <div className="m-4 flex justify-center">
+      <div className="m-4 flex justify-center items-center p-4">
         <Logout />
       </div>
     </div>

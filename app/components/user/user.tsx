@@ -403,10 +403,10 @@ export default function UserDashboard({ user }: UserDashboardProps) {
   }
 
   return (
-    <div className="bg-white min-h-screen p-6">
+    <div className="bg-white dark:bg-slate-900 min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
         {/* User Info Section */}
-        <div className="bg-slate-100 p-6 rounded-lg mb-6">
+        <div className="bg-slate-100 dark:bg-slate-500 p-6 rounded-lg mb-6">
           <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
           <div className="space-y-2">
             <div>
@@ -437,7 +437,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
         </section>
 
         {/* Projects Section */}
-        <section className="bg-white border border-gray-300 p-6 rounded-lg mb-6">
+        <section className="border border-gray-300 p-6 rounded-lg mb-6 dark:bg-slate-500">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-semibold">Your Projects</h3>
             <button
@@ -466,7 +466,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                   id="projectTitle"
                   value={projectTitle}
                   onChange={(e) => setProjectTitle(e.target.value)}
-                  className="w-full border border-gray-300 rounded p-3 text-gray-700 bg-white"
+                  className="w-full border border-gray-300 rounded p-3 text-gray-700"
                   placeholder="e.g., Website Redesign"
                   required
                 />
@@ -550,7 +550,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
 
                   {/* Project Messages Section */}
                   {expandedProjectId === project.id && (
-                    <div className="mt-4 p-4 bg-white rounded-lg border border-purple-200">
+                    <div className="mt-4 p-4  rounded-lg border border-purple-200">
                       <h5 className="font-semibold text-gray-700 mb-3">
                         Project Messages
                       </h5>
@@ -698,7 +698,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
         </section>
 
         {/* General Message Form */}
-        <section className="bg-white border border-gray-300 p-6 rounded-lg mb-6">
+        <section className="border border-gray-300 p-6 rounded-lg mb-6">
           <h3 className="text-xl font-semibold mb-4">
             Send a General Message to Support
           </h3>
@@ -714,7 +714,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                 id="message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full border border-gray-300 rounded p-3 text-gray-700 bg-white"
+                className="w-full border border-gray-300 rounded p-3"
                 rows={5}
                 placeholder="Type your message here..."
                 required
@@ -731,7 +731,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
         </section>
 
         {/* General Messages Section */}
-        <section className="bg-white border border-gray-300 p-6 rounded-lg">
+        <section className="border border-gray-300 p-6 rounded-lg">
           <h3 className="text-xl font-semibold mb-4">General Messages</h3>
 
           {messagesLoading ? (
@@ -772,7 +772,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                       <textarea
                         value={editText}
                         onChange={(e) => setEditText(e.target.value)}
-                        className="w-full border border-gray-500 rounded p-2 text-grey-700 bg-white mb-2"
+                        className="w-full border border-gray-500 rounded p-2 text-grey-700 mb-2"
                         rows={3}
                       ></textarea>
                       <div className="flex gap-2">

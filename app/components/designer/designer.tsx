@@ -248,14 +248,17 @@ export default function DesignerDashboard({ user }: DesignerDashboardProps) {
             <h3 className="font-semibold mb-2">General Messages</h3>
 
             {generalMessages.map((m) => (
-              <div key={m.id} className="p-2 bg-gray-100 rounded mb-2">
+              <div
+                key={m.id}
+                className="p-2 bg-gray-100 rounded mb-2 dark:bg-slate-400 "
+              >
                 <strong>{m.sender}:</strong> {m.text}
               </div>
             ))}
 
             <form onSubmit={(e) => sendGeneralReply(e, user.id)}>
               <textarea
-                className="w-full border p-2 mt-2 bg-white text-slate-900"
+                className="w-full border p-2 mt-2 bg-white dark:bg-slate-400 text-slate-900 rounded"
                 value={replyText[user.id] || ""}
                 onChange={(e) =>
                   setReplyText({ ...replyText, [user.id]: e.target.value })
@@ -277,7 +280,10 @@ export default function DesignerDashboard({ user }: DesignerDashboardProps) {
                 <h4 className="font-semibold">{project.title}</h4>
 
                 {messages.map((m) => (
-                  <div key={m.id} className="p-2 bg-gray-100 rounded mb-2">
+                  <div
+                    key={m.id}
+                    className="p-2 bg-gray-100 rounded mb-2 dark:bg-slate-400 rounded"
+                  >
                     <strong>{m.sender}:</strong> {m.text}
                   </div>
                 ))}
@@ -286,7 +292,7 @@ export default function DesignerDashboard({ user }: DesignerDashboardProps) {
                   onSubmit={(e) => sendProjectReply(e, user.id, project.id)}
                 >
                   <textarea
-                    className="w-full border p-2 mt-2 bg-white text-slate-900"
+                    className="w-full border p-2 mt-2 bg-white text-slate-900 dark:bg-slate-400  rounded"
                     value={projectReplyText[project.id] || ""}
                     onChange={(e) =>
                       setProjectReplyText({
