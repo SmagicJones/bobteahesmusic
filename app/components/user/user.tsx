@@ -699,9 +699,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
 
         {/* General Message Form */}
         <section className="border border-gray-300 p-6 rounded-lg mb-6">
-          <h3 className="text-xl font-semibold mb-4">
-            Send a General Message to Support
-          </h3>
+          <h3 className="text-xl font-semibold mb-4">Send a General Message</h3>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
@@ -714,7 +712,7 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                 id="message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full border border-gray-300 rounded p-3"
+                className="w-full border border-gray-300 rounded p-3 bg-white dark:bg-slate-400"
                 rows={5}
                 placeholder="Type your message here..."
                 required
