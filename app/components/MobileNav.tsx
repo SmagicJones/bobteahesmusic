@@ -124,17 +124,18 @@ export default function MobileNav() {
                   </li>
                 </ul>
               </DrawerHeader>
-              <div className="p-4">
+              <div className="flex flex-col p-2">
                 {isAuthenticated ? (
                   <div className="flex flex-col gap-4">
-                    <NavLink to="dashboard">
-                      <Button className="w-full">Dashboard</Button>
-                    </NavLink>
+                    <Button asChild className="w-full">
+                      <NavLink to="dashboard">Dashboard</NavLink>
+                    </Button>
+
                     <Logout />
                   </div>
                 ) : (
-                  <Button asChild>
-                    <Link to="/login"></Link>
+                  <Button asChild className="w-full">
+                    <Link to="/login">Login</Link>
                   </Button>
                 )}
               </div>

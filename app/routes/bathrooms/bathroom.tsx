@@ -12,7 +12,7 @@ import { Button } from "~/components/ui/button";
 
 export default function Bathroom() {
   const bathroom = useLoaderData<Bathroom>();
-  console.log(bathroom);
+
   return (
     <main>
       <section>

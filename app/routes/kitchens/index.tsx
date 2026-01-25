@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { kitchens, type Kitchen } from "~/data/kitchens";
 import ContactForm from "~/components/ContactForm";
-import { useState } from "react";
+
 import {
   Card,
   CardContent,
@@ -12,7 +12,6 @@ import {
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 export default function Kitchens() {
-  const [showForm, setShowForm] = useState(false);
   return (
     <main>
       <header className="bg-purple-300 dark:bg-slate-900">
