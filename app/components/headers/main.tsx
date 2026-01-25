@@ -19,7 +19,7 @@ export default function JNCHeader() {
   }, []);
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div className="relative w-full overflow-hidden pt-8">
       {/* Animated Background Gradient */}
       <div className="absolute inset-0">
         <div

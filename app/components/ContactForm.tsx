@@ -24,7 +24,7 @@ interface ContactFormProps {
 const ContactForm = forwardRef<HTMLFormElement, ContactFormProps>(
   ({ actionData }, ref) => {
     return (
-      <Card>
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Book a Consultation</CardTitle>
           <CardDescription>
@@ -70,7 +70,7 @@ const ContactForm = forwardRef<HTMLFormElement, ContactFormProps>(
         </CardContent>
       </Card>
     );
-  }
+  },
 );
 
 ContactForm.displayName = "ContactForm";

@@ -31,7 +31,7 @@ export default function Bathrooms() {
               </p>
             </div>
           </div>
-          <div className="flex items-center justify-center h-[100%] p-4">
+          <div className="flex items-center justify-center h-[100%]">
             <ContactForm />
           </div>
         </div>

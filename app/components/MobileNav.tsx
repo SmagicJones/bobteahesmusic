@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 import { MenuIcon, X } from "lucide-react";
 
@@ -133,7 +133,9 @@ export default function MobileNav() {
                     <Logout />
                   </div>
                 ) : (
-                  <Login />
+                  <Button asChild>
+                    <Link to="/login"></Link>
+                  </Button>
                 )}
               </div>
               <div className="p-4">
