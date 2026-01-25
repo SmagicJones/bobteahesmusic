@@ -8,7 +8,7 @@ export default function Go() {
   const isAuthenticated = Boolean(user);
   if (isAuthenticated) return <Navigate to="/dashboard" replace />;
   return (
-    <main className="flex justify-center items-center pt-6">
+    <main className="flex justify-center items-center m-2">
       <Login />
     </main>
   );

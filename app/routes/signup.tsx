@@ -90,8 +90,8 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex items-center justify-center p-6">
-      <Card className="w-full max-w-md">
+    <div className="flex items-center justify-center m-2">
+      <Card className="w-full">
         <CardHeader>
           <CardTitle className="text-2xl">Create Account</CardTitle>
           <CardDescription>
