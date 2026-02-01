@@ -15,6 +15,8 @@ export default [
     route("kitchens/:slug", "routes/kitchens/kitchen.tsx"),
     route("bathrooms", "routes/bathrooms/index.tsx"),
     route("bathrooms/:slug", "routes/bathrooms/bathroom.tsx"),
+    route("create-checkout-session", "routes/create-checkout-session.ts"),
+    route("webhook", "routes/webhook.ts"),
     layout("components/loggedWrapper.tsx", [
       route("dashboard", "routes/dashboard.tsx"),
     ]),
