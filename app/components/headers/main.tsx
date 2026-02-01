@@ -51,7 +51,7 @@ export default function JNCHeader() {
             {/* Subheading */}
             <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               From initial concept to final installation, we create stunning,
-              functional spaces tailored to your vision
+              functional spaces tailored to your vision for any budget
             </p>
 
             {/* CTA Buttons */}
