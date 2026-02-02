@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { db } from "~/firebase/firebaseConfig";
 import type { AuthUser } from "~/types/authUser";
+import DimensionsForm from "./DimensionsForm";
 
 interface UserData {
   email: string;
@@ -813,6 +814,10 @@ export default function UserDashboard({ user }: UserDashboardProps) {
                     {/* Project Messages Section */}
                     {expandedProjectId === project.id && (
                       <div className="mt-4 p-4 rounded-lg border border-purple-200">
+                        <DimensionsForm
+                          userId={user.uid}
+                          projectId={project.id}
+                        />
                         <h5 className="font-semibold text-gray-700 mb-3">
                           Project Messages
                         </h5>

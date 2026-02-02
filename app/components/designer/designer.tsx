@@ -14,6 +14,7 @@ import {
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from "~/firebase/firebaseConfig";
 import type { AuthUser } from "~/types/authUser";
+import DesignerDimensions from "./DesignerDimensions";
 
 /* =======================
    Types
@@ -407,6 +408,11 @@ export default function DesignerDashboard({ user }: DesignerDashboardProps) {
                 key={project.id}
                 className="border rounded p-4 mb-4 bg-slate-50 dark:bg-slate-700"
               >
+                <DesignerDimensions
+                  customerId={user.id}
+                  projectId={project.id}
+                  designerId={user.id}
+                />
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-semibold">{project.title}</h4>
                   {project.price && (
