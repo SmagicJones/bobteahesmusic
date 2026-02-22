@@ -26,21 +26,15 @@ const ContactForm = forwardRef<HTMLFormElement, ContactFormProps>(
     return (
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Book a Consultation</CardTitle>
-          <CardDescription>
-            Get the new look sooner than you think
-          </CardDescription>
+          <CardTitle>Get in Touch</CardTitle>
+          <CardDescription>Get some lessons</CardDescription>
         </CardHeader>
         <CardContent>
           <Form method="post" action="/contact" ref={ref}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="firstname">First Name:</Label>
+                <Label htmlFor="firstname">Name:</Label>
                 <Input type="text" id="firstname" name="firstname" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="lastname">Last Name:</Label>
-                <Input type="text" id="lastname" name="lastname" />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email:</Label>

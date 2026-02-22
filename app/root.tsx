@@ -12,8 +12,6 @@ import AuthProvider from "./contexts/authProvider";
 
 import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
-import DesktopNav from "./components/DesktopNav";
-import MobileNav from "./components/MobileNav";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -35,20 +33,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+
         <Meta />
         <Links />
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function() {
-                const saved = localStorage.getItem("dark-mode");
-                const isDark = saved === "true" || 
-                               (saved === null && window.matchMedia("(prefers-color-scheme: dark)").matches);
-                if (isDark) {
-                  document.documentElement.classList.add("dark");
-                }
-              })();
-            `,
+      (function() {
+        try {
+          const saved = localStorage.getItem("dark-mode");
+          const isDark = saved === "true" ||
+                        (saved === null && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", isDark);
+        } catch (e) {}
+      })();
+    `,
           }}
         />
       </head>
@@ -62,19 +64,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const navigation = useNavigation();
-  const isNavigating = Boolean(navigation.location);
-  return (
-    <main className="min-h-screen">
-      {isNavigating ? (
-        <div className="flex justify-center items-center h-screen">
-          <div className="loading-spinner"></div>
-        </div>
-      ) : (
-        <Outlet />
-      )}
-    </main>
-  );
+  return <Outlet />;
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

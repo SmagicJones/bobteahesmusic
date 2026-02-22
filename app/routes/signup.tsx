@@ -5,14 +5,10 @@ import {
   useActionData,
   Link,
 } from "react-router";
-import {
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
-import { useState } from "react";
-import fbAuth, { db } from "~/firebase/firebaseConfig";
-import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+import { fbAuth } from "~/firebase/firebaseConfig";
+
 import {
   Card,
   CardContent,
@@ -40,18 +36,9 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(
-      fbAuth,
-      email,
-      password,
-    );
-    await setDoc(doc(db, "users", userCredential.user.uid), {
-      email: email,
-      displayName: null,
-      createdAt: serverTimestamp(),
-      role: "customer",
-    });
-    return redirect("/dashboard");
+    await createUserWithEmailAndPassword(fbAuth, email, password);
+
+    return redirect("/free-stuff");
   } catch (err) {
     console.error("Signup error:", err);
     return {
@@ -63,35 +50,10 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function Signup() {
   const actionData = useActionData() as { error?: string };
-  const [googleError, setGoogleError] = useState<string | null>(null);
-
-  const handleGoogleSignup = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(fbAuth, provider);
-      const userRef = doc(db, "users", result.user.uid);
-      const docSnap = await getDoc(userRef);
-
-      // Only create Firestore doc if it doesn't exist
-      if (!docSnap.exists()) {
-        await setDoc(userRef, {
-          email: result.user.email,
-          displayName: result.user.displayName || null,
-          createdAt: serverTimestamp(),
-          role: "customer",
-        });
-      }
-
-      window.location.href = "/dashboard";
-    } catch (err) {
-      console.error("Google signup error:", err);
-      setGoogleError("Failed to sign up with Google.");
-    }
-  };
 
   return (
-    <div className="flex items-center justify-center m-2">
-      <Card className="w-full">
+    <div className="flex items-center justify-center m-2 mb-8">
+      <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Create Account</CardTitle>
           <CardDescription>
@@ -152,12 +114,6 @@ export default function Signup() {
               </Button>
             </Link>
           </div>
-
-          {googleError && (
-            <Alert variant="destructive" className="mt-4">
-              <AlertDescription>{googleError}</AlertDescription>
-            </Alert>
-          )}
         </CardContent>
       </Card>
     </div>

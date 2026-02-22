@@ -1,7 +1,7 @@
 import styles from "./logout.module.css";
 import { useNavigate } from "react-router";
 import { useAuth } from "~/contexts/useAuth";
-import fbAuth from "~/firebase/firebaseConfig";
+import { fbAuth } from "~/firebase/firebaseConfig";
 
 export default function Logout() {
   const navigate = useNavigate();

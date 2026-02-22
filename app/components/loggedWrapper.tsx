@@ -8,7 +8,7 @@ export async function clientLoader() {
 
   const isLogged = await isAuth();
   if (!isLogged) {
-    throw redirect("/");
+    throw redirect("/login");
   }
 }
 

@@ -26,7 +26,6 @@ export async function action({ request }: ActionFunctionArgs) {
   const payload = {
     fields: [
       { name: "firstname", value: formEntry.firstname },
-      { name: "lastname", value: formEntry.lastname },
       { name: "email", value: formEntry.email },
       { name: "message", value: formEntry.message },
     ],
@@ -34,12 +33,12 @@ export async function action({ request }: ActionFunctionArgs) {
 
   try {
     const response = await fetch(
-      `https://api.hsforms.com/submissions/v3/integration/submit/146967651/63003af8-e6ac-4e3b-a054-0bd35856330f`,
+      `https://api.hsforms.com/submissions/v3/integration/submit/146967651/98234179-3ebe-42f1-a019-355922f9425f`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-      }
+      },
     );
 
     // Handle non-2xx responses explicitly
@@ -80,9 +79,9 @@ export default function Contact() {
   }, [actionData]);
 
   return (
-    <main className="flex justify-center mt-2">
+    <main className="flex justify-center mt-2 mb-8">
       <section className="grid grid-cols-1 gap-4 w-[90%] md:w-[70%] lg:w-[40%]">
-        <Card>
+        <Card className="mb-4">
           <CardHeader>
             <CardTitle>Contact Us</CardTitle>
             <CardDescription>

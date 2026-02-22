@@ -1,25 +1,25 @@
 import { useEffect, useState, type JSX } from "react";
-
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 
+function getInitialDarkMode(): boolean {
+  // Read what the inline script already applied to <html>
+  // This is the single source of truth on mount — no localStorage race
+  return document.documentElement.classList.contains("dark");
+}
+
 export default function DarkModeToggle(): JSX.Element {
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("dark-mode");
-      if (saved !== null) return saved === "true";
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    return false;
-  });
+  const [isDark, setIsDark] = useState<boolean>(false);
+
+  // Sync initial state from the DOM (what the inline script set)
+  // Only runs client-side, after hydration — eliminates the race
+  useEffect(() => {
+    setIsDark(getInitialDarkMode());
+  }, []);
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDark) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
+    const root = document.documentElement;
+    root.classList.toggle("dark", isDark);
     localStorage.setItem("dark-mode", isDark.toString());
   }, [isDark]);
 
@@ -27,9 +27,10 @@ export default function DarkModeToggle(): JSX.Element {
     <div className="flex items-center space-x-2">
       <Switch
         id="mode-toggle"
-        onClick={() => setIsDark(!isDark)}
+        checked={isDark} // controlled — stays in sync
+        onCheckedChange={setIsDark} // proper Radix handler
         aria-label="Toggle dark mode"
-      ></Switch>
+      />
       <Label htmlFor="mode-toggle">{isDark ? "Light Mode" : "Dark Mode"}</Label>
     </div>
   );

@@ -8,17 +8,14 @@ import {
 export default [
   layout("components/rootLayout.tsx", [
     index("routes/home.tsx"),
+    route("lessons", "routes/lessons/index.tsx"),
+    route("lessons/guitar", "routes/lessons/guitar.tsx"),
+    route("lessons/bass", "routes/lessons/bass.tsx"),
     route("signup", "routes/signup.tsx"),
     route("contact", "routes/contact.tsx"),
     route("login", "routes/login.tsx"),
-    route("kitchens", "routes/kitchens/index.tsx"),
-    route("kitchens/:slug", "routes/kitchens/kitchen.tsx"),
-    route("bathrooms", "routes/bathrooms/index.tsx"),
-    route("bathrooms/:slug", "routes/bathrooms/bathroom.tsx"),
-    route("create-checkout-session", "routes/create-checkout-session.ts"),
-    route("webhook", "routes/webhook.ts"),
     layout("components/loggedWrapper.tsx", [
-      route("dashboard", "routes/dashboard.tsx"),
+      route("free-stuff", "routes/free-stuff.tsx"),
     ]),
   ]),
 ] satisfies RouteConfig;
