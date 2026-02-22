@@ -1,74 +1,79 @@
-# React Router Netlify Template
+# bobteachesmusic
 
-A modern, production-ready template for building full-stack React applications using React Router,
-deployed to Netlify.
+Website for Bob Teahes — qualified guitar and bass teacher with 15+ years experience. Built with React Router 7, deployed to Netlify.
 
-## Features
+## Stack
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-- 💻 Configured for deployment to Netlify
+- **Framework** — [React Router 7](https://reactrouter.com/) (SSR)
+- **Language** — TypeScript
+- **Styling** — Tailwind CSS + [shadcn/ui](https://ui.shadcn.com/)
+- **Auth** — Firebase Authentication
+- **Deployment** — Netlify
+
+## Pages
+
+| Route | Description |
+|---|---|
+| `/` | Home / hero |
+| `/lessons` | Guitar & bass lessons overview |
+| `/lessons/guitar` | Guitar lessons detail |
+| `/lessons/bass` | Bass lessons detail |
+| `/free-stuff` | Free chart downloads (guitar & bass) |
+| `/free-stuff/guitar` | Guitar charts |
+| `/free-stuff/bass` | Bass charts |
+| `/contact` | Contact & booking |
 
 ## Getting Started
 
-### Installation
-
-Install the dependencies:
-
 ```bash
 npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+App runs at `http://localhost:5173`.
 
-## Building for Production
-
-Create a production build:
+## Build & Preview
 
 ```bash
 npm run build
-```
-
-## Previewing a Production build
-
-To preview a production build locally, use the [Netlify CLI](https://cli.netlify.com):
-
-```bash
 npx netlify-cli serve
 ```
 
-```bash
-npm run build
+## Environment Variables
+
+Create a `.env` file at the root (never commit this):
+
+```env
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_APP_ID=
 ```
+
+In production, set these in the Netlify dashboard under **Site settings → Environment variables**.
 
 ## Deployment
 
-This template is preconfigured for deployment to Netlify.
+The project deploys automatically via Netlify on push to `main`. Config is in `netlify.toml`.
 
-Follow <https://docs.netlify.com/welcome/add-new-site/> to add this project as a site
-in your Netlify account.
+To deploy manually:
 
-## Styling
+```bash
+npm run build
+npx netlify-cli deploy --prod
+```
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+## Adding Chart Downloads
 
-## See also
+Guitar charts live in `app/data/guitar/charts.ts`, bass charts in `app/data/bass/charts.ts`. Each entry follows this shape:
 
-[Guide: how to deploy a React Router 7 site to Netlify](https://developers.netlify.com/guides/how-to-deploy-a-react-router-7-site-to-netlify/)
+```ts
+{
+  title: string;       // Chart name
+  intro: string;       // Short description
+  comment?: string;    // Optional longer note
+  download_url: string; // Path to file in /public or external URL
+}
+```
 
----
-
-Built with ❤️ using React Router.
+Drop new PDF/image files in `/public` and add the corresponding entry to the data file.
