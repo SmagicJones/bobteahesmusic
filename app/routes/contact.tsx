@@ -92,12 +92,8 @@ export default function Contact() {
             <Form method="post" ref={formRef}>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
-                  <Label htmlFor="firstname">First Name:</Label>
+                  <Label htmlFor="firstname">Name:</Label>
                   <Input type="text" id="firstname" name="firstname" />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="lastname">Last Name:</Label>
-                  <Input type="text" id="lastname" name="lastname" />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email:</Label>
