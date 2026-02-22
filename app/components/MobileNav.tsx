@@ -83,32 +83,9 @@ export default function MobileNav() {
                   <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
                       <AccordionTrigger className="cursor-pointer hover:text-slate-400">
-                        <NavLink to="/resources">Resources</NavLink>
+                        <NavLink to="/free-stuff">Free Stuff</NavLink>
                       </AccordionTrigger>
-                      <AccordionContent>
-                        <ul className="text-left">
-                          <li>
-                            <NavLink
-                              to="/resources/guitar"
-                              className="cursor-pointer hover:text-slate-400"
-                            >
-                              <DrawerClose className="pb-2 cursor-pointer">
-                                Guitar
-                              </DrawerClose>
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
-                              to="/resources/bass"
-                              className="cursor-pointer hover:text-slate-400"
-                            >
-                              <DrawerClose className="pb-2 cursor-pointer">
-                                Bass
-                              </DrawerClose>
-                            </NavLink>
-                          </li>
-                        </ul>
-                      </AccordionContent>
+                      <AccordionContent></AccordionContent>
                     </AccordionItem>
                   </Accordion>
                 </li>
